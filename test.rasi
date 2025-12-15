@@ -1,0 +1,112 @@
+configuration {
+    show-icons: true;
+    font: "JetBrainsMono Nerd Font 10";
+}
+
+@import "colors.rasi"
+
+* {
+    font:                        "JetBrains Mono Nerd Font 10";
+    
+    /* Variables from your colors.rasi */
+    transparent-background:      #1d2024da; 
+
+    background:                  @surface-container;
+    background-alt:              @surface-container-high;
+    foreground:                  @on-surface;
+    selected:                    @primary-fixed-dim;
+    active:                      @secondary;
+    urgent:                      @error;
+}
+
+/* Window glass panel */
+window {
+    location:                    center;
+    anchor:                      center;
+    fullscreen:                  false;
+    
+    width:                       100%;
+    height:                      50%;
+    
+    padding:                     0px;
+    
+    background-color:            @transparent-background;
+    transparency:                "real";
+    border-radius:               0px;
+}
+
+mainbox {
+    enabled:                     true;
+    spacing:                     0px;
+    background-color:            transparent;
+    orientation:                 vertical;
+    children:                    [ "listview" ];
+}
+
+listview {
+    enabled:                     true;
+    columns:                     5;
+    lines:                       1;
+    
+    cycle:                       true;
+    dynamic:                     true;
+    scrollbar:                   false;
+    layout:                      vertical;
+    
+    /* Ensure height is determined by container, not fixed */
+    fixed-columns:               true;
+    
+    spacing:                     15px;
+    /* Minimal margin to let content expand */
+    margin:                      5px; 
+    
+    background-color:            transparent;
+    text-color:                  @foreground;
+    cursor:                      "default";
+}
+
+/* The Card (Element) - Minimal vertical constraints */
+element {
+    enabled:                     true;
+    /* CRITICAL: Orient horizontal to place icon and text side-by-side */
+    orientation:                 horizontal; 
+    
+    /* Minimal spacing to merge icon and background */
+    spacing:                     0px;
+    
+    /* CRITICAL: Use horizontal padding only, let the icon size define the height */
+    padding:                     0px 10px; 
+    border-radius:               20px;
+    
+    background-color:            transparent;
+    text-color:                  @foreground;
+    cursor:                      pointer;
+    
+    children:                    [ "element-icon" ]; /* Only show the icon, hide the text */
+}
+
+/* Selected Card */
+element selected.normal {
+    background-color:            @selected;
+    text-color:                  @background; 
+}
+
+element-icon {
+    /* CRITICAL: MAX SIZE and EXPAND 
+       This forces the icon to grow as large as possible within the element's space.
+    */
+    size:                        500px; /* An arbitrary, ridiculously large size */
+    expand:                      true;  /* Allow the icon to take all available space */
+    vertical-align:              0.5;   /* Center vertically */
+    horizontal-align:            0.5;   /* Center horizontally */
+    
+    cursor:                      inherit;
+    background-color:            transparent;
+    text-color:                  inherit;
+}
+
+/* Hide the text entirely */
+element-text {
+    enabled:                     false; 
+    background-color:            transparent;
+}
